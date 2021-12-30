@@ -10,3 +10,6 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "node", "main.js" ]
+
+
+#docker run -d -p 8080:8080 <container id>
