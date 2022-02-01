@@ -7,7 +7,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Backend/**'
+      - './Backend'
   pull_request:
     branches: [ main ]
   
