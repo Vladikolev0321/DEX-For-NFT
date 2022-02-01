@@ -37,7 +37,7 @@ jobs:
         username: ${{secrets.REMOTE_USERNAME}}
         script: |
           pm2 delete all
-          cd /root/snap/lxd/current/work_vladi_pesho/DEX-For-NFT
+          cd /root/snap/lxd/current/work_vladi_pesho/DEX-For-NFT/Backend
           git pull
           npm install
           pm2 start npm --start
