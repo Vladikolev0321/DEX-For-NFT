@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npm install swagger-jsdoc swagger-ui-express --save
+
 EXPOSE 8080
 CMD [ "node", "main.js" ]
 

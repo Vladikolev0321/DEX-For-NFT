@@ -1,9 +1,43 @@
 const express = require('express');
 const app = express();
 const PORT = 8080;
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+
+
 
 app.use( express.json() )
 app.listen(PORT);
+
+
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Library API",
+      version: "1.0.0",
+      description: "A simple Express Library API",
+      termsOfService: "http://example.com/terms/",
+      contact: {
+        name: "API Support",
+        url: "http://www.exmaple.com/support",
+        email: "support@example.com",
+      },
+    },
+
+    servers: [
+      {
+        url: "http://localhost:4001",
+        description: "My API Documentation",
+      },
+    ],
+  },
+  apis: ["./Routes/*.js"],
+};
+
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 
 app.post('/register', (req, res) =>{
