@@ -10,7 +10,6 @@ app.use(express.json())
 app.listen(PORT);
 
 
-
 const options = {
     definition: {
         openapi: "3.0.0",
@@ -69,9 +68,15 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.post('/register', (req, res) => {
     const { name, email, password } = req.body;
     // create user and add it to db
-    res.status(201).send({
-        text: `User ${name} registered`
-    });
+
+    if(!name || !email || !password){
+        res.sendStatus(401);
+    }else{
+        res.status(201).send({
+            text: `User ${name} registered`
+        });
+    }
+
 });
 
 
@@ -352,3 +357,8 @@ app.get('/account', (req, res) => {
     });
 
 });
+
+
+
+module.exports = app; // for testing
+
