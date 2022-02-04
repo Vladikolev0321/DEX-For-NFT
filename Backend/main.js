@@ -112,16 +112,24 @@ app.post('/register', (req, res) => {
  */
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
+    
+    if(!email || !password){
+        return res.sendStatus(401);
+    }
+
     // check if user exists
     // 
     user = {};
     if (user) {
-        res.status(200).send({
+        return res.status(200).send({
             text: `Logged in ${email}`
         });
+    }else{
+        // if user provides invalid credentials
+    // res.sendStatus(401);
     }
-    // if user provides invalid credentials
-    res.sendStatus(401);
+    
+    
 });
 
 
