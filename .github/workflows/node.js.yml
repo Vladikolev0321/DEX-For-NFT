@@ -45,5 +45,5 @@ jobs:
           cd /root/snap/lxd/current/work_vladi_pesho/DEX-For-NFT/Backend
           git pull
           npm install
-          pm2 start npm --start
+          pm2 start main.js
           
