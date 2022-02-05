@@ -69,9 +69,9 @@ app.post('/register', (req, res) => {
     const { name, email, password } = req.body;
     // create user and add it to db
 
-    if(!name || !email || !password){
+    if (!name || !email || !password) {
         res.sendStatus(401);
-    }else{
+    } else {
         res.status(201).send({
             text: `User ${name} registered`
         });
@@ -231,9 +231,9 @@ app.post('/nft/:id/buy', (req, res) => {
     // change nft owners and other paramerers for ownership
     // change nft status
     //success
-    res.sendStatus(200);
+    return res.sendStatus(200);
     // failure
-    res.sendStatus(424);
+    return res.sendStatus(424);
 
 });
 
@@ -361,4 +361,3 @@ app.get('/account', (req, res) => {
 
 
 module.exports = app; // for testing
-
