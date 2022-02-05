@@ -20,7 +20,7 @@ jobs:
         working-directory: ./Backend
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x]
+        node-version: [12.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -39,10 +39,11 @@ jobs:
         key: ${{secrets.REMOTE_SSH}}
         host: ${{secrets.REMOTE_IP}}
         username: ${{secrets.REMOTE_USERNAME}}
+        passphrase: ${{ secrets.REMOTE_PASSPHRASE }} 
         script: |
           pm2 delete all
           cd /root/snap/lxd/current/work_vladi_pesho/DEX-For-NFT/Backend
           git pull
           npm install
-          pm2 start npm --start
+          pm2 start main.js
           
