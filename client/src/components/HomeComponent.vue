@@ -1,19 +1,33 @@
 <template>
   <div>
-    
+    <button id="show-modal" @click="showModalValue = true">Show Modal</button>
+    <Teleport to="body">
+      <Modal :show="showModal" @close="showModalValue = false" @ok="listItem">
+        <template #header>
+          <h3>Header</h3>
+        </template>
+      </Modal>
+    </Teleport>
   </div>
 </template>
 
 <script>
 const Web3 = require("web3");
+import Modal from './ModalComponent.vue'
 
 export default {
   components: {
-    
+    Modal
+  },
+  computed: {
+    showModal() {
+      return this.showModalValue
+    }
   },
   data() {
     return {
       accounts: null,
+      showModalValue: false,
       
     }
   },
@@ -53,6 +67,11 @@ export default {
           return true;
         }
         return false;
+    },
+    async listItem() {
+      this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
+
+
     }
   }
 }
