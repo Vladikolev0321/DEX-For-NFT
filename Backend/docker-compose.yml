@@ -1,9 +1,0 @@
-swagger-ui:
-   image: swaggerapi/swagger-ui
-   container_name: swagger_ui_container
-   ports:
-      - "80:8080"
-   volumes: 
-    - /bar:/openapi
-   environment:
-      SWAGGER_JSON: /openapi/swagger.json
