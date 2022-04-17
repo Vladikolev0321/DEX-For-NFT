@@ -14,6 +14,7 @@
 <script>
 const Web3 = require("web3");
 import Modal from './ModalComponent.vue'
+import { dexAbi, nftAbi } from '../utils/getAbi.js'
 
 export default {
   components: {
@@ -69,7 +70,15 @@ export default {
         return false;
     },
     async listItem() {
-      this.contract = new this.web3.eth.Contract(this.contractABI, this.contractAddress);
+
+      
+      this.contract = new this.web3.eth.Contract(dexAbi, '0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451');
+      // access contract method from account
+      this.contract.methods.getBalance().call({from: this.accounts[0]}).then(balance => {
+        console.log(balance);
+      });
+
+
 
 
     }
