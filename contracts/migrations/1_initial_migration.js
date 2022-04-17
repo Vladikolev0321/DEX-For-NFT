@@ -1,5 +1,7 @@
-const Migrations = artifacts.require("Migrations");
+const NFT = artifacts.require('NFT');
+const DEX = artifacts.require('DEX');
 
 module.exports = function (deployer) {
-  deployer.deploy(Migrations);
+	deployer.deploy(NFT);
+	deployer.deploy(DEX);
 };
