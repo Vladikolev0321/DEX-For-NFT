@@ -4,10 +4,10 @@ const app = express();
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
 const options = require('./config/swaggerOptions.js');
+console.log(options)
 const specs = swaggerJsDoc(options);
 
 app.use(express.json());
-app.listen(PORT);
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
