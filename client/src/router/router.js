@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import BuyView from '../views/BuyView.vue'
-import SellView from '../views/SellView.vue'
-import NftsView from '../views/NftsView.vue'
+import SellView from '../views/SellView.vue';
+import NftsView from '../views/NftsView.vue';
 
 // set up routes tha my application needs: home, login, register, data, pipelines, models and their child routes
 const routes = [
