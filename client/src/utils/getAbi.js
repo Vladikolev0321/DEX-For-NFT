@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('file-system');
 const dexContract = JSON.parse(fs.readFileSync('../../../contracts/build/contracts/DEX.json', 'utf8'));
 const nftContract = JSON.parse(fs.readFileSync('../../../contracts/build/contracts/NFT.json', 'utf8'));
 
