@@ -5,7 +5,8 @@
             <img class="card-img-top" src="" alt="Card image cap">
             <div class="card-body">
                 <p class="card-text text-right">{{ price }}</p>
-                <button-component @click="showModalValue = true" message="Buy"></button-component>
+                <!-- <button-component @click="showModalValue = true" message="Buy"></button-component> -->
+                <button-component @click="buyNft" message="Buy"></button-component>
             </div>
         </div>
         <div>
@@ -25,7 +26,7 @@ import DialogComponent from './DialogComponent.vue';
 import dexAbi from '../utils/dexAbi.json';
 const Web3 = require("web3");
 export default {
-    dsata() {
+    data() {
         return {
             show: false,
             message: "",
@@ -57,17 +58,25 @@ export default {
             return this.showModal;
         }
     },
-    nethods: {
+    methods: {
         async buyNft() {
             let web3 = new Web3(window.ethereum);
-            let marketplace = new web3.eth.Contract(dexAbi, "0xfAcF0b24B5c243dA2d3F67F5bcDf4fD856284079");
-            let currentAccount = await this.web3.eth.getAccounts()[0];
-            if (currentAccount.getBalance() < this.price * 10 ** 18) {
-                this.message = "You don't have enough ethereunm to buy this nft!";
+            let marketplace = new web3.eth.Contract(dexAbi, "0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451");
+            let accounts = await web3.eth.getAccounts();
+
+            let currentAccount = accounts[0];
+            console.log(currentAccount);
+            let balance = await web3.eth.getBalance(currentAccount);
+            console.log(balance);
+            // the check doesn't work
+            if (balance < this.price) {
+                this.message = "You don't have enough ethereum to buy this nft!";
                 this.show = true;
                 return;
             }
-            await marketplace.buyToken(this.tokenId).send({ from: currentAccount });
+            console.log(this.tokenId)
+            console.log(this.price)
+            await marketplace.methods.buyToken(this.tokenId).send({ from: currentAccount, value: this.price });
         },
         close() {
             this.show = false;
