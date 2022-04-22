@@ -40,7 +40,8 @@ contract DEX {
 	);
 
 	uint private _listingId = 0;
-	mapping(uint => Listing) private _listings;
+	uint public listingCount = 0;
+	mapping(uint => Listing) public listings;
 
 	function listToken(address token, uint tokenId, uint price) external {
 		IERC721(token).transferFrom(msg.sender, address(this), tokenId);
@@ -54,8 +55,9 @@ contract DEX {
 		);
 
 		_listingId++;
+		listingCount++;
 
-		_listings[_listingId] = listing;
+		listings[_listingId] = listing;
 
 		emit Listed(
 			_listingId,
@@ -67,11 +69,11 @@ contract DEX {
 	}
 
 	function getListing(uint listingId) public view returns (Listing memory) {
-		return _listings[listingId];
+		return listings[listingId];
 	}
 
 	function buyToken(uint listingId) external payable {
-		Listing storage listing = _listings[listingId];
+		Listing storage listing = listings[listingId];
 
 		require(msg.sender != listing.seller, "Seller cannot be buyer");
 		require(listing.status == ListingStatus.Active, "Listing is not active");
@@ -93,7 +95,7 @@ contract DEX {
 	}
 
 	function cancel(uint listingId) public {
-		Listing storage listing = _listings[listingId];
+		Listing storage listing = listings[listingId];
 
 		require(msg.sender == listing.seller, "Only seller can cancel listing");
 		require(listing.status == ListingStatus.Active, "Listing is not active");
