@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>
-            Cigani s bmw
+            My nfts
         </h1>
     </div>
 </template>

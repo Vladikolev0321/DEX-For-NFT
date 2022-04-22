@@ -17,18 +17,20 @@ export default {
             await this.setUpNft(formData);
         },
         async setUpNft(formData) {
-            console.log(formData)
             let web3 = new Web3(window.ethereum);
-            let marketplace = new web3.eth.Contract(dexAbi, "0xfAcF0b24B5c243dA2d3F67F5bcDf4fD856284079");
-            let nft = new web3.eth.Contract(nftAbi, "0x700a44b03F702EF397Ac2e58C6320044b7dF3171");
+            let marketplace = new web3.eth.Contract(dexAbi, "0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451");
+            let nft = new web3.eth.Contract(nftAbi, "0xb904A7D08a6C3Ba86Fa4860e86F698aC6fdf3396");
+            
+            // get current account
+            let accounts = await web3.eth.getAccounts();
             // get tokenId of new nft 
             const id = await formData.tokenId;
             // approve marketplace to spend nft
             // VERY SUSPICIOUS
-            await nft.methods.setApprovalForAll("0xfAcF0b24B5c243dA2d3F67F5bcDf4fD856284079", true).send({from: formData.address});
+            await nft.methods.setApprovalForAll("0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451", true).send({from: accounts[0]});
             // add nft to marketplace
             const listingPrice = ethers.utils.parseEther(formData.price.toString());
-            await marketplace.methods.listToken("0x700a44b03F702EF397Ac2e58C6320044b7dF3171", id, listingPrice).send({from: formData.address});
+            await marketplace.methods.listToken("0xb904A7D08a6C3Ba86Fa4860e86F698aC6fdf3396", id, listingPrice).send({from: accounts[0]});
         }
     }
 }
