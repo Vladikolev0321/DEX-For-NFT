@@ -13,8 +13,8 @@
             placeholder="Nft Address"
             v-model="address.value"
           />
-          <p v-if="!address.isValid">{{ address.errorMsg }}</p>
         </label>
+        <p v-if="!address.isValid">{{ address.errorMsg }}</p>
         <label for="id" class="label-control">
           <input
             type="text"
@@ -67,12 +67,12 @@ export default {
         errorMsg: '',
       },
       tokenId: {
-        value: null,
+        value: '',
         isValid: true,
         errorMsg: '',
       },
       price: {
-        value: null,
+        value: '',
         isValid: true,
         errorMsg: '',
       },
@@ -107,10 +107,16 @@ export default {
     },
     validateTokenId() {
       this.tokenId.value = parseInt(this.tokenId.value, 10);
-      if (!this.tokenId.value || typeof this.tokenId.value !== 'number') {
+      if (!this.tokenId.value.trim() || typeof this.tokenId.value !== 'string') {
         this.changeInputValidity('tokenId', false);
         this.setInputErrorMsg('tokenId', 'Enter valid nft tokenId.');
         return false;
+      }else {
+        if (typeof this.tokenId.value !== 'number') {
+        this.changeInputValidity('tokenId', false);
+        this.setInputErrorMsg('tokenId', 'Enter valid nft tokenId.');
+        return false;
+       }
       }
       if (!this.tokenId.isValid) {
         this.changeInputValidity('tokenId', true);

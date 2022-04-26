@@ -1,10 +1,10 @@
 <template>
   <div>
     <DialogComponent @close="close" :show="isActive" :heading="getMessage" />
-    <div class="card" style="width: 18rem">
-      <img class="card-img-top" src="" alt="Card image cap" />
+    <div class="card">
+      <img class="card-img-top" :src="image" alt="Card image cap" />
       <div class="card-body">
-        <p class="card-text text-right">{{ price }}</p>
+        <p class="card-text text-right"> Price: {{ price }}</p>
         <button-component @click="buyNft" message="Buy"></button-component>
       </div>
     </div>
@@ -75,13 +75,13 @@ export default {
       const balance = await web3.eth.getBalance(currentAccount);
       console.log(balance);
       // the check doesn't work
-      if (balance < this.price) {
+      const userBalance = balance / 10 ** 18;
+      const neededBalance = this.price / 10 ** 18;
+      if (userBalance < neededBalance) {
         this.message = "You don't have enough ethereum to buy this nft!";
         this.show = true;
         return;
       }
-      console.log(this.tokenId);
-      console.log(this.price);
       await marketplace.methods
         .buyToken(this.tokenId)
         .send({ from: currentAccount, value: this.price });
@@ -93,3 +93,19 @@ export default {
   components: { DialogComponent },
 };
 </script>
+
+<style scoped>
+.card-img-top {
+  height: 25vh;
+  width: 20vw;
+}
+.card {
+  width: 20vw;;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 20px;
+  border: 1px solid black;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+</style>
