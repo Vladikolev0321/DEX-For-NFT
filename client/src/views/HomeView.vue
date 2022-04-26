@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="nft-container">
         <NftComponent
         v-for="nft in nfts"
         :key="nft.tokenId"
@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     async getNfts() {
-      console.log('getting nfts');
       const web3 = new Web3(window.ethereum);
       const marketplace = new web3.eth.Contract(
         dexAbi,
@@ -53,11 +52,9 @@ export default {
       for (let i = 1; i <= nftsCount; i++) {
         const item = await marketplace.methods.getListing(i).call();
         if (item.status === '0') {
-          // get uri url from nft contract
-          const uri = await nft.methods.tokenURI(item.tokenId).call();
-          console.log(uri);
           const nftPrice = item.price;
           const nftImage = await nft.methods.tokenURI(item.tokenId).call();
+          console.log(nftImage)
           nftData.push({
             tokenId: item.tokenId,
             price: nftPrice,
@@ -70,3 +67,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.nft-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+</style>
