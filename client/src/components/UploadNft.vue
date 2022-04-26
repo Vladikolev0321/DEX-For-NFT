@@ -3,35 +3,41 @@
   <form @submit.prevent="submitForm" class="form-data">
     <div class="input-data">
       <div class="login-data">
-        <input
-          type="username"
-          class="form-control"
-          :class="{ invalid: !address.isValid }"
-          id="inputUsername"
-          @input="validateAddress()"
-          placeholder="Nft Address"
-          v-model="address.value"
-        />
-        <p v-if="!address.isValid">{{ address.errorMsg }}</p>
-        <input
-          type="text"
-          class="form-control"
-          id="inputText"
-          :class="{ invalid: !tokenId.isValid }"
-          @input="validateTokenId()"
-          placeholder="Token Id"
-          v-model.trim="tokenId.value"
-        />
+        <label for="address" class="label-control">
+          <input
+            type="username"
+            class="form-control"
+            :class="{ invalid: !address.isValid }"
+            id="inputUsername"
+            @input="validateAddress()"
+            placeholder="Nft Address"
+            v-model="address.value"
+          />
+          <p v-if="!address.isValid">{{ address.errorMsg }}</p>
+        </label>
+        <label for="id" class="label-control">
+          <input
+            type="text"
+            class="form-control"
+            id="inputText"
+            :class="{ invalid: !tokenId.isValid }"
+            @input="validateTokenId()"
+            placeholder="Token Id"
+            v-model.trim="tokenId.value"
+          />
+        </label>
         <p v-if="!tokenId.isValid">{{ tokenId.errorMsg }}</p>
-        <input
-          type="text"
-          class="form-control"
-          id="inputText"
-          :class="{ invalid: !price.isValid }"
-          @input="validatePrice()"
-          placeholder="Nft price"
-          v-model.trim="price.value"
-        />
+        <label for="price" class="label-control">
+          <input
+            type="text"
+            class="form-control"
+            id="inputText"
+            :class="{ invalid: !price.isValid }"
+            @input="validatePrice()"
+            placeholder="Nft price"
+            v-model.trim="price.value"
+          />
+        </label>
         <p v-if="!price.isValid">{{ price.errorMsg }}</p>
       </div>
       <div class="last-message">
@@ -48,26 +54,27 @@
 <script>
 
 export default {
+  /* eslint-disable */
   // sending the form data to the parent component vie emit-event conception
-  emits: ["export-data"],
+  emits: ['export-data'],
   data() {
     return {
       // make all inputs objects - with properties: value, isValid, because when implementing form
-      //validation I will need to store a bool flag if the input is valid or not
+      // validation I will need to store a bool flag if the input is valid or not
       address: {
-        value: "",
+        value: '',
         isValid: true,
-        errorMsg: "",
+        errorMsg: '',
       },
       tokenId: {
         value: null,
         isValid: true,
-        errorMsg: "",
+        errorMsg: '',
       },
       price: {
         value: null,
         isValid: true,
-        errorMsg: "",
+        errorMsg: '',
       },
       // Add boolean flag that will be used to do basic form validation
       formIsValid: true,
@@ -77,7 +84,7 @@ export default {
     message: {
       type: String,
       requred: true,
-      default: "Upload",
+      default: 'Upload',
     },
   },
   methods: {
@@ -89,46 +96,42 @@ export default {
     },
     validateAddress() {
       if (!this.address.value.trim()) {
-        this.changeInputValidity("address", false);
-        this.setInputErrorMsg("address", "Enter valid nft address.");
+        this.changeInputValidity('address', false);
+        this.setInputErrorMsg('address', 'Enter valid nft address.');
         return false;
-      } else {
-        if (!this.address.isValid) {
-          this.changeInputValidity("address", true);
-        }
-        return true;
       }
+      if (!this.address.isValid) {
+        this.changeInputValidity('address', true);
+      }
+      return true;
     },
     validateTokenId() {
-        this.tokenId.value = parseInt(this.tokenId.value, 10);
-        if (!this.tokenId.value || typeof this.tokenId.value !== "number") {
-            this.changeInputValidity("tokenId", false);
-            this.setInputErrorMsg("tokenId", "Enter valid nft tokenId.");
-            return false;
-        } else {
-            if (!this.tokenId.isValid) {
-                this.changeInputValidity("tokenId", true);
-            }
-            return true;
-        }
+      this.tokenId.value = parseInt(this.tokenId.value, 10);
+      if (!this.tokenId.value || typeof this.tokenId.value !== 'number') {
+        this.changeInputValidity('tokenId', false);
+        this.setInputErrorMsg('tokenId', 'Enter valid nft tokenId.');
+        return false;
+      }
+      if (!this.tokenId.isValid) {
+        this.changeInputValidity('tokenId', true);
+      }
+      return true;
     },
     validatePrice() {
-        this.price.value = parseInt(this.price.value, 10);
-        if (!this.price.value || typeof this.price.value !== "number" || this.price.value <= 0) {
-            this.changeInputValidity("price", false);
-            this.setInputErrorMsg("price", "Enter valid nft price.");
-            return false;
-        } else {
-            if (!this.price.isValid) {
-                this.changeInputValidity("price", true);
-            }
-            return true;
-        }
+      this.price.value = parseInt(this.price.value, 10);
+      if (!this.price.value || typeof this.price.value !== 'number' || this.price.value <= 0) {
+        this.changeInputValidity('price', false);
+        this.setInputErrorMsg('price', 'Enter valid nft price.');
+        return false;
+      }
+      if (!this.price.isValid) {
+        this.changeInputValidity('price', true);
+      }
+      return true;
     },
     validateForm() {
       // Reset validation rule to true if it was previously false
       this.formIsValid = true;
-
     },
     submitForm() {
       this.validateForm();
@@ -138,11 +141,11 @@ export default {
       }
 
       const formData = {
-          address: this.address.value,
-          tokenId: this.tokenId.value,
-          price: this.price.value
+        address: this.address.value,
+        tokenId: this.tokenId.value,
+        price: this.price.value,
       };
-      return this.$emit("export-data", formData);
+      return this.$emit('export-data', formData);
     },
   },
 };
@@ -168,11 +171,13 @@ form {
   width: 30%;
   text-align: center;
 }
-.input-data {
-  margin-bottom: 45px;
+
+.label-control {
+  display: flex;
+  margin-bottom: 0.7rem;
 }
+
 .form-data .form-control {
-  margin-top: 7%;
   background: #eef6fb;
   border: 1px solid #d9e4f5;
   box-sizing: border-box;
@@ -181,4 +186,10 @@ form {
 .form-data .form-control.invalid {
   border: 1px solid red;
 }
+
+.input-data {
+  display: flex;
+  flex-direction: column;
+}
+
 </style>

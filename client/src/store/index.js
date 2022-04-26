@@ -1,25 +1,30 @@
+/* eslint-disable */
 import { createStore } from 'vuex';
-const config = require('../config/config.js');
+
+const config = addresses;
+import dexAbi from '../utils/dexAbi.json';
+import nftAbi from '../utils/nftAbi.json';
+
 export default createStore({
   state: {
-    config: config
+    config: config,
   },
   getters: {
-    getDexAbi (state) {
-      return state.config.dexAbi;
+    getDexAbi(state) {;
+      return dexAbi;
     },
-    getNftAbi (state) {
-      return state.config.nftAbi;
+    getNftAbi(state) {
+      return nftAbi;
     },
-    getNftAddress (state) {
-      return state.config.nftAddress;
+    getNftAddress() {
+      return "0x700a44b03F702EF397Ac2e58C6320044b7dF3171";
     },
-    getMarketplaceAddress (state) {
-      return state.config.marketplaceAddress;
-    }
+    getMarketplaceAddress(state) {
+      return "0xfAcF0b24B5c243dA2d3F67F5bcDf4fD856284079";
+    },
   },
   mutations: {
   },
   actions: {
-  }
+  },
 });

@@ -25,10 +25,10 @@ export default {
       require: true,
     },
   },
-  emits: ["close"],
+  emits: ['close'],
   methods: {
     close() {
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 };

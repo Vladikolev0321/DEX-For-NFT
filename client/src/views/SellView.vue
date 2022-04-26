@@ -1,35 +1,52 @@
 <template>
-    <UploadComponent @export-data="getData" :message="'Upload'"/>
+  <UploadComponent @export-data="getData" :message="'Upload'" />
 </template>
 
 <script>
 import UploadComponent from '../components/UploadNft.vue';
-const Web3 = require("web3");
+import dexAbi from '../utils/dexAbi.json';
+import nftAbi from '../utils/nftAbi.json';
+
+const dexAddress = '0xfAcF0b24B5c243dA2d3F67F5bcDf4fD856284079';
+const nftAddress = '0x700a44b03F702EF397Ac2e58C6320044b7dF3171';
+
+const Web3 = require('web3');
 const ethers = require('ethers');
+/* eslint-disable */
 export default {
-    components: {
-        UploadComponent
+  components: {
+    UploadComponent,
+  },
+  methods: {
+    async getData(formData) {
+      await this.setUpNft(formData);
     },
-    methods: {
-        async getData(formData) {
-            await this.setUpNft(formData);
-        },
-        async setUpNft(formData) {
-            let web3 = new Web3(window.ethereum);
-            let marketplace = new web3.eth.Contract(this.$store.getters.getDexAbi, "0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451");
-            let nft = new web3.eth.Contract(this.$store.getters.getNftAbi, "0xb904A7D08a6C3Ba86Fa4860e86F698aC6fdf3396");
-            
-            // get current account
-            let accounts = await web3.eth.getAccounts();
-            // get tokenId of new nft 
-            const id = await formData.tokenId;
-            // approve marketplace to spend nft
-            // VERY SUSPICIOUS
-            await nft.methods.setApprovalForAll("0x8Ac556773AEAE39D29E618B9Dc9C9b3b04d27451", true).send({from: accounts[0]});
-            // add nft to marketplace
-            const listingPrice = ethers.utils.parseEther(formData.price.toString());
-            await marketplace.methods.listToken("0xb904A7D08a6C3Ba86Fa4860e86F698aC6fdf3396", id, listingPrice).send({from: accounts[0]});
-        }
-    }
-}
+    async setUpNft(formData) {
+      const web3 = new Web3(window.ethereum);
+      const marketplace = new web3.eth.Contract(
+        dexAbi,
+        dexAddress,
+      );
+      const nft = new web3.eth.Contract(
+        nftAbi,
+        nftAddress,
+      );
+
+      // get current account
+      const accounts = await web3.eth.getAccounts();
+      // get tokenId of new nft
+      const id = await formData.tokenId;
+      // approve marketplace to spend nft
+      // VERY SUSPICIOUS
+      await nft.methods
+        .setApprovalForAll(this.$store.getters.getMarketplaceAddress, true)
+        .send({ from: accounts[0] });
+      // add nft to marketplace
+      const listingPrice = ethers.utils.parseEther(formData.price.toString());
+      await marketplace.methods
+        .listToken(this.$store.getters.getNftAddress, id, listingPrice)
+        .send({ from: accounts[0] });
+    },
+  },
+};
 </script>

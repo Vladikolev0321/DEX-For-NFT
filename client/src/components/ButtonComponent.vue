@@ -7,14 +7,14 @@
 <script>
 
 export default {
-    props: {
-        message: {
-        type: String,
-        requred: true,
-        default: "Submit",
-        }
-    }
-}
+  props: {
+    message: {
+      type: String,
+      requred: true,
+      default: 'Submit',
+    },
+  },
+};
 </script>
 
 <style scoped>

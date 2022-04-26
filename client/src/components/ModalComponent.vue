@@ -1,9 +1,9 @@
 <script>
 export default {
   props: {
-    show: Boolean
-  }
-}
+    show: Boolean,
+  },
+};
 </script>
 
 <template>
@@ -21,7 +21,7 @@ export default {
 
           <div class="modal-footer">
             <slot name="footer">
-              
+
               <button
                 class="modal-default-button"
                 @click="$emit('close')"
